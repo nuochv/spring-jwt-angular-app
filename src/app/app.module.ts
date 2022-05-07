@@ -1,3 +1,6 @@
+import { UserComponent } from './component/user/user.component';
+import { RegisterComponent } from './component/register/register.component';
+import { LoginComponent } from './component/login/login.component';
 import { NotfiticationService } from './service/notfitication.service';
 import { AuthenticationGuardInterceptor } from './interceptor/authentication-guard.interceptor';
 import { UserService } from './service/user.service';
@@ -10,11 +13,18 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NotificationModule } from './notification.module';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [
+    AppComponent,
+    LoginComponent,
+    RegisterComponent,
+    UserComponent,
+  ],
   imports: [
     BrowserModule,
+    FormsModule,
     AppRoutingModule,
     HttpClientModule,
     NotificationModule,

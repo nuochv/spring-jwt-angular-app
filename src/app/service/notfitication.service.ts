@@ -9,6 +9,6 @@ export class NotfiticationService {
   constructor(private notifier: NotifierService) {}
 
   public notify(type: NotificationType, message: string) {
-    return this.notifier.notify(type, message);
+    this.notifier.notify(type, message);
   }
 }
