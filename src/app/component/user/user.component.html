@@ -80,7 +80,7 @@
               <td class="">
                 <div class="btn-group">
                   <button class="btn btn-outline-info" (click)="onEditUser(appUser)"><i class="fas fa-edit"></i></button>
-                  <button [hidden]="!isAdmin" class="btn btn-outline-danger" (click)="onDeleteUder(appUser?.username)"><i class="fas fa-trash"></i></button>
+                  <button [hidden]="!isAdmin" class="btn btn-outline-danger" (click)="onDeleteUder(appUser?.username!)"><i class="fas fa-trash"></i></button>
                 </div>
               </td>
             </tr>
@@ -319,7 +319,7 @@
                     </li>
                     <li class="list-group-item"><i class="fa fa-envelope float-right"></i>{{selectedUser?.email}}
                     </li>
-                    <li class="list-group-item"><i class="fas fa-shield-alt float-right"></i>{{selectedUser?.role.substring(5)}}
+                    <li class="list-group-item"><i class="fas fa-shield-alt float-right"></i>{{selectedUser?.role?.substring(5)}}
                     <li *ngIf="selectedUser?.lastLoginDateDisplay" class="list-group-item"><i
                         class="fas fa-sign-in-alt float-right"></i>{{selectedUser?.lastLoginDateDisplay | date: 'medium'}}
                     </li>
@@ -376,6 +376,10 @@
                     <label for="email">Email</label>
                     <input type="email" name="email" required ngModel class="form-control">
                   </div>
+                  <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" name="password" required ngModel class="form-control">
+                  </div>
                   <div *ngIf="isAdmin" class="form-group">
                     <label for="authority">Role</label>
                     <select name="role" required ngModel="ROLE_USER" class="form-control">
@@ -396,7 +400,7 @@
                     </div>
                     <div class="custom-file">
                       <input type="file" accept="image/*" name="profileImage"
-                      (change)="onProfileImageChange($event.target.files[0].name, $event.target.files[0])"
+                      (change)="onProfileImageChange($any($event.target).files[0].name, $any($event.target).files[0])"
                         class="custom-file-input">
                       <label class="custom-file-label"><span [hidden]="!fileName">{{ fileName }}</span>
                         <span [hidden]="fileName">Choose File</span>
@@ -482,7 +486,7 @@
                 </div>
                 <div class="custom-file">
                   <input type="file" accept="image/*" [disabled]="!isAdminOrManager" name="profileImage"
-                    (change)="onProfileImageChange($event.target.files[0].name, $event.target.files[0])"
+                    (change)="onProfileImageChange($any($event.target).files[0].name, $any($event.target).files[0])"
                     class="custom-file-input">
                   <label class="custom-file-label"><span [hidden]="!fileName">{{fileName}}</span>
                     <span [hidden]="fileName">Choose File</span>
@@ -567,7 +571,7 @@
               </div>
               <div class="custom-file">
                 <input type="file" accept="image/*" name="profileImage"
-                  (change)="onProfileImageChange($event.target.files[0].name, $event.target.files[0])"
+                  (change)="onProfileImageChange($any($event.target).files[0].name, $any($event.target).files[0])"
                   class="custom-file-input">
                 <label class="custom-file-label"><span [hidden]="!fileName">{{fileName}}</span>
                   <span [hidden]="fileName">Choose File</span>
@@ -604,7 +608,7 @@
       <!-- profile image change form -->
     <form enctype="multipart/form-data" style="display:none;">
         <input type="file"
-          (change)="onProfileImageChange($event.target.files[0].name, $event.target.files[0]); onUpdateProfileImage()"
+          (change)="onProfileImageChange($any($event.target).files[0].name, $any($event.target).files[0]); onUpdateProfileImage()"
          name="profile-image-input" id="profile-image-input" placeholder="file" accept="image/*" />
     </form>
   

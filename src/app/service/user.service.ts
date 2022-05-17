@@ -14,7 +14,7 @@ export class UserService {
   constructor(private http: HttpClient) {}
 
   public getUsers(): Observable<User[]> {
-    return this.http.get<User[]>(`${this.host}/user/list`);
+    return this.http.get<User[]>(`${this.host}/user`);
   }
 
   public addUser(formData: FormData): Observable<User> {

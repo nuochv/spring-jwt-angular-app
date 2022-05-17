@@ -24,12 +24,12 @@ import { Role } from 'src/app/enum/role.enum';
 export class UserComponent implements OnInit, OnDestroy {
   private titleSubject = new BehaviorSubject<string>('Users');
   public titleAction$ = this.titleSubject.asObservable();
-  public users!: User[];
+  public users: User[] = [];
   public user!: User;
   public refreshing: boolean = false;
-  public selectedUser!: User;
+  public selectedUser: User = new User();
   public fileName!: string;
-  public profileImage!: File | Blob;
+  public profileImage!: File;
   private subscriptions: Subscription[] = [];
   public editUser = new User();
   private currentUsername!: string;
@@ -67,10 +67,7 @@ export class UserComponent implements OnInit, OnDestroy {
           }
         },
         (errorResponse: HttpErrorResponse) => {
-          this.sendNotification(
-            NotificationType.ERROR,
-            errorResponse.error.message
-          );
+          this.sendNotification(NotificationType.ERROR, errorResponse.message);
           this.refreshing = false;
         }
       )
@@ -92,6 +89,7 @@ export class UserComponent implements OnInit, OnDestroy {
   }
 
   public onAddNewUser(userForm: NgForm): void {
+    console.log(userForm.value);
     const formData = this.userService.createUserFormDate(
       '',
       userForm.value,
@@ -111,10 +109,7 @@ export class UserComponent implements OnInit, OnDestroy {
           );
         },
         (errorResponse: HttpErrorResponse) => {
-          this.sendNotification(
-            NotificationType.ERROR,
-            errorResponse.error.message
-          );
+          this.sendNotification(NotificationType.ERROR, errorResponse.message);
           this.profileImage;
         }
       )
@@ -140,10 +135,7 @@ export class UserComponent implements OnInit, OnDestroy {
           );
         },
         (errorResponse: HttpErrorResponse) => {
-          this.sendNotification(
-            NotificationType.ERROR,
-            errorResponse.error.message
-          );
+          this.sendNotification(NotificationType.ERROR, errorResponse.message);
           this.profileImage;
         }
       )
@@ -172,10 +164,7 @@ export class UserComponent implements OnInit, OnDestroy {
           );
         },
         (errorResponse: HttpErrorResponse) => {
-          this.sendNotification(
-            NotificationType.ERROR,
-            errorResponse.error.message
-          );
+          this.sendNotification(NotificationType.ERROR, errorResponse.message);
           this.refreshing = false;
           this.profileImage;
         }
@@ -193,10 +182,7 @@ export class UserComponent implements OnInit, OnDestroy {
           this.reportUploadProgress(event);
         },
         (errorResponse: HttpErrorResponse) => {
-          this.sendNotification(
-            NotificationType.ERROR,
-            errorResponse.error.message
-          );
+          this.sendNotification(NotificationType.ERROR, errorResponse.message);
           this.fileStatus.status = 'done';
         }
       )
@@ -259,7 +245,7 @@ export class UserComponent implements OnInit, OnDestroy {
           this.refreshing = false;
         },
         (error: HttpErrorResponse) => {
-          this.sendNotification(NotificationType.WARNING, error.error.message);
+          this.sendNotification(NotificationType.WARNING, error.message);
           this.refreshing = false;
         },
         () => emailForm.reset()
@@ -275,7 +261,7 @@ export class UserComponent implements OnInit, OnDestroy {
           this.getUsers(false);
         },
         (error: HttpErrorResponse) => {
-          this.sendNotification(NotificationType.ERROR, error.error.message);
+          this.sendNotification(NotificationType.ERROR, error.message);
         }
       )
     );
